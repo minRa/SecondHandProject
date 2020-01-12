@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import InputExampleActions from'./components/SearchBar';
+import SpacingGrid from'./components/CardList';
 
 const Home = () => {
-
     return (
-        <div>
-            <h2>this is first landing page</h2>
-        </div>
+    <>
+        <InputExampleActions/>
+        <SpacingGrid/>      
+    </>
     )
 }
 
