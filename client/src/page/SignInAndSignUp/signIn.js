@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import {connect} from'react-redux';
+
+import {
+  googleSignInStart,
+  emailSignInStart
+} from '../../redux/user/user.actions';
+
 
 function Copyright() {
   return (
@@ -46,8 +54,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+ function SignIn({googleSignInStart, emailSignInStart}) {
   const classes = useStyles();
+  
+  const [signIn, setSignIn] = useState({
+      email:'',
+      password:''
+  })
+
+  const {email, password} = signIn
+
+ const handleChange = e => {
+   const {name, value} = e.target
+   setSignIn({...signIn, [name]:value})
+ }
+
+ const formSubmit = e => {
+   e.preventDefault()
+   emailSignInStart (email, password)
+   setSignIn({email:'', password:''})
+ }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,7 +86,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={formSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -70,6 +97,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -81,6 +110,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -95,6 +126,18 @@ export default function SignIn() {
           >
             Sign In
           </Button>
+
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={googleSignInStart}
+          >
+           Sign in with Google
+          </Button>
+
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -115,3 +158,16 @@ export default function SignIn() {
     </Container>
   );
 }
+
+
+
+const mapDispatchToProps = dispatch =>({
+     googleSignInStart: () => dispatch(googleSignInStart()),
+     emailSignInStart: (email, password)=>
+      dispatch(emailSignInStart({email, password}))
+  
+}) 
+
+export default connect(null,
+  mapDispatchToProps
+  )(SignIn)

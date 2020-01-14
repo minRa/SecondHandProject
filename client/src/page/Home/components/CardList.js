@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import itemData from './itemData';
+
 import MediaCard from'./MediaCard';
 
 const useStyles = makeStyles(theme => ({
@@ -18,28 +18,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SpacingGrid() {
+function SpacingGrid({items}) {
 
   const classes = useStyles();
   return (
-      
-    <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="flex-start" spacing={2}>
-          {itemData.map(({id, ...otherProps}) => (
-            <Grid key={id} item>
-                 <MediaCard {...otherProps}/>  
+    <>
+    { items === null || undefined || '' || items.length < 1 ?  <h1> Sorry.., we don't have item what your search.. </h1> :
+        <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={12}>
+                <Grid container justify="center" spacing={2}>
+                {items.map(({id, ...otherProps}) => (
+                    <Grid key={id} item>
+                        <MediaCard {...otherProps}/>  
+                    </Grid>
+                ))}
+                </Grid>
             </Grid>
-          ))}
         </Grid>
-      </Grid>
-    </Grid>
+  }
+  </>
   );
 }
 
 
-
-
-
+export default SpacingGrid
 
 

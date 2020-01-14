@@ -13,7 +13,8 @@ import { IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345,
+    width:300,
+    height:300
   },
   media: {
     height: 140,
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function MediaCard({ url, title, price, des}) {
+export default function MediaCard({ url, title, price, des, city, category}) {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -33,7 +34,11 @@ export default function MediaCard({ url, title, price, des}) {
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-           <h5>{title}</h5> {des}
+            <h5><strong>{title}</strong> </h5> 
+            {des}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p" align="left">
+             category: {category} 
           </Typography>
           <Typography gutterBottom variant="h5" component="h2" align="right">
               Price: ${price}
@@ -47,6 +52,9 @@ export default function MediaCard({ url, title, price, des}) {
         <IconButton >
         <InfoIcon/>
         </IconButton>
+        <Typography variant="h6"  component="h6" align="right">
+               {city}
+        </Typography>
       </CardActions>
     </Card>
   );

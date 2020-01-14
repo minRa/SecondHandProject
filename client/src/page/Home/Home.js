@@ -1,14 +1,40 @@
-import React from 'react';
-import InputExampleActions from'./components/SearchBar';
-import SpacingGrid from'./components/CardList';
+import React, {useState, useEffect}from 'react';
+import SearchBar  from'./components/SearchBar';
+import CardListContainer from'./components/CardList.Container';
+import {connect} from 'react-redux';
+import {fetchCollectionsStart} from'../../redux/item/item.action';
+//import CardList from'./components/CardList';
+import {createStructuredSelector} from'reselect';
+import {selectCollections, selectIsCollectionFetching} from'../../redux/item/item.selector';
 
-const Home = () => {
+const Home = ({collections, fetchCollectionsStart, isLoading}) => {
+    
+    const [items, setItems] = useState(null)
+
+    useEffect(()=>{
+     fetchCollectionsStart()  
+    },[])
+
+    useEffect(()=>{
+        isLoading ? setItems(null) :setItems(collections)
+       },[isLoading, collections])
+
     return (
     <>
-        <InputExampleActions/>
-        <SpacingGrid/>      
+        <SearchBar setItems ={setItems} />
+        <CardListContainer items ={items} />      
     </>
     )
 }
 
-export default Home
+
+
+const mapDispatchToProps =dispatch=>({
+    fetchCollectionsStart:()=> dispatch(fetchCollectionsStart())
+})
+ const mapStateToProps = createStructuredSelector ({
+     collections: selectCollections,
+     isLoading: selectIsCollectionFetching
+ })
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

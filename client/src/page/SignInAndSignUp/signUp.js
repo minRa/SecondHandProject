@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import {connect} from 'react-redux';
+import { signUpStart } from'../../redux/user/user.actions';
 
 function Copyright() {
   return (
@@ -46,8 +49,39 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+function SignUp({signInStart}) {
   const classes = useStyles();
+
+  const [userSignUp, setUserSignUp] = useState({
+     firstName:'',
+     lastName:'',
+     email:'',
+     password:'',
+     //confirmPassword:''
+  })
+
+  const {firstName, lastName, email, password} = userSignUp
+
+  const handleChange = e => {
+    const {name, value} = e.target
+    setUserSignUp({...userSignUp, [name]:value})
+
+  } 
+
+  const formSubmit = e => {
+    e.preventDefault()
+   // if(password !== confirmPassword) return alert('you need to match password')
+   const displayName = firstName +' ' + lastName
+   signInStart({ displayName, email, password})
+
+    setUserSignUp({
+      firstName:'',
+      lastName:'',
+      email:'',
+      password:'',
+     // confirmPassword:''
+    })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,7 +93,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={formSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -71,6 +105,8 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                value={firstName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -82,6 +118,8 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                value={lastName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,6 +131,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,8 +145,24 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={handleChange}
               />
             </Grid>
+            {/* <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="Password"
+                label="ConfirmPassword"
+                type="password"
+                id="ConfirmPassword"
+                autoComplete="current-password"
+                value={confirmPassword}
+                onChange={handleChange}
+              />
+            </Grid> */}
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -138,3 +194,14 @@ export default function SignUp() {
     </Container>
   );
 }
+
+
+const mapDispatchToProps = dispatch => ({
+  signInStart: (userCredentials) => 
+  dispatch(signUpStart(userCredentials))
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+) (SignUp)

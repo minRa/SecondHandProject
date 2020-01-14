@@ -2,55 +2,55 @@
 const itemData =[
     {
       id:1,
-      location:'auckland',
+      city:'auckland',
       category:'car',
       url: "https://placeimg.com/64/64/2",
-      title :"Contemplative Reptile",
+      title :"ABC",
       price : 100,
       des : "Lizards are a widespread group of squamate reptiles, with over 6,000 species, rangingacross all continents except Antarctica"
     },
     {
         id:2,
-        location:'invercargill',
+        city:'invercargill',
         category:'car',
         url: "https://placeimg.com/64/64/2",
-        title :"Contemplative Reptile",
+        title :"ABC",
         price : 200,
         des : "Lizards are a widespread group of squamate reptiles, with over 6,000 species, rangingacross all continents except Antarctica"
       },
       {
         id:3,
-        location:'auckland',
+        city:'auckland',
         category:'clothes',
         url: "https://placeimg.com/64/64/2",
-        title :"Contemplative Reptile",
+        title :"BBC",
         price : 300,
         des : "Lizards are a widespread group of squamate reptiles, with over 6,000 species, rangingacross all continents except Antarctica"
       },
       {
         id:4,
-        location:'invercargill',
+        city:'invercargill',
         category:'clothes',
         url: "https://placeimg.com/64/64/2",
-        title:"Contemplative Reptile",
+        title:"BBC",
         price: 400,
         des:"Lizards are a widespread group of squamate reptiles, with over 6,000 species, rangingacross all continents except Antarctica"
       },
       {
         id:5,
-        location:'auckand',
+        city:'auckland',
         category:'others',
         url: "https://placeimg.com/64/64/2",
-        title:"Contemplative Reptile",
+        title:"KFC",
         price: 500,
         des:"Lizards are a widespread group of squamate reptiles, with over 6,000 species, rangingacross all continents except Antarctica"
       },
       {
         id:6,
-        location:'invercargill',
+        city:'invercargill',
         category:'others',
         url: "https://placeimg.com/64/64/2",
-        title:"Contemplative Reptile",
+        title:"KFC",
         price: 600,
         des:"Lizards are a widespread group of squamate reptiles, with over 6,000 species, rangingacross all continents except Antarctica"
       },

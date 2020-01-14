@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 export const OptionLink = styled(Link)`
 padding: 10px 15px;
 cursor: pointer;
-color: #FFFFFF;
+color:black;
 
-&:hover {text-decoration: none}
+&:hover {
+    text-decoration: none
+
+}
 
 `;

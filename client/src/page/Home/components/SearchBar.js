@@ -1,21 +1,84 @@
-import React from 'react'
-import {Divider, Header, Icon, Select, Input, Grid, Button } from 'semantic-ui-react'
+import React, {useEffect, useState} from 'react'
+import {Divider, Header, Icon, Input, Grid } from 'semantic-ui-react'
+import {connect} from'react-redux';
+import {createStructuredSelector} from 'reselect';
+import { selectCollections  } from'../../../redux/item/item.selector';
+import ControlledOpenSelectCategory from '../../../components/select/select';
 
 
-const LocationOptions = [
-  { key: 'all', text: 'All - NewZealand', value: 'all' },
-  { key: 'auckland', text: 'Auckland', value: 'auckland' },
-  { key: 'invercargill', text: 'Invercargill', value: 'invercargill' },
+const cityOptions =[
+  {id: 1 ,name:'ALL - NewZealand', value:'all'},
+  {id: 2 ,name:'Auckand', value:'auckland'},
+  {id: 3 ,name:'Invercargill', value:'invercargill'}
 ]
 
-const ItemOptions = [
-  { key: 'all', text: 'All - Items', value: 'all' },
-  { key: 'car', text: 'Car', value: 'car' },
-  { key: 'clothes', text: 'Clothes', value: 'clothes' },
-  { key: 'others', text: 'Others', value: 'others' },
+const CategoryOptions =[
+  {id: 1 ,name:'ALL - Items', value:'all'},
+  {id: 2 ,name:' Car ', value:'car'},
+  {id: 3 ,name:'Clothes', value:'clothes'},
+  {id: 4 ,name:'Others', value:'others'},
 ]
 
-const InputExampleActions = () => (
+
+const SearchBar = ({collections, setItems}) => {
+  const [city, setCity] = useState('all');
+  const [category, setCategory] = useState('all');
+  const [search, setSearch] = useState('');
+
+
+  const searchResult =( data ) => 
+  data.filter((c) => c.title.indexOf(search) !== -1)
+
+// Search condition...
+  const filterComponents = (data)=>{  
+       if(data !== null) {
+         if(city !=='all'){
+           if(category !== 'all'){
+             if(search !=='') {
+              const result = data.filter((item) =>(item.city === city && item.category === category))
+              //const result = selectResult(data, city, category);
+              // const filterResult = result.filter((c) => {
+              //   return c.title.indexOf(search) !== -1;
+              // });
+              return setItems(searchResult(result))
+             }   
+
+             const result = data.filter((item) =>(item.city === city && item.category === category))            
+             return setItems(result)
+            } else if(search !=='') {
+              const result = data.filter((item) =>(item.city === city))
+              return setItems(searchResult(result))
+            }
+            const result = data.filter((item) =>(item.city === city))
+            return setItems(result)
+
+        } else if (category !== 'all') {
+
+            if(search !==''){
+                const result = data.filter((item) =>(item.category === category))
+                return setItems(searchResult(result))
+              }          
+
+             const result =data.filter((item) =>(item.category === category))
+             return setItems(result)
+           } 
+           
+        else if(search !== ''){
+          return setItems(searchResult(data))     
+        }
+         return  setItems(data);
+       } 
+    }
+    
+    useEffect(()=> {
+      filterComponents(collections)    
+      },[city, category, search])
+
+  const handleSearchChange = e => {
+    setSearch(e.target.value)
+  }
+
+  return (
   <>
       <Divider horizontal>
       <Header as='h4'>
@@ -23,20 +86,15 @@ const InputExampleActions = () => (
         Search Items
       </Header>
     </Divider>
-
-  <Grid>
-    <Grid.Column width={5}>
-    </Grid.Column>
-    <Grid.Column width={6}>
-        <Input type='text' placeholder='Search...' action>
-          <input />  
-          <Select compact options={LocationOptions} defaultValue='all' /> 
-          <Select compact options={ItemOptions} defaultValue='all' /> 
-          <Button type='submit'>Search</Button>
-        </Input>
-      </Grid.Column>
-      <Grid.Column width={5}>
-      </Grid.Column>
+   <br/>
+    <Grid textAlign="center">
+      <ControlledOpenSelectCategory category={city} setCategory={setCity} options={cityOptions} title='city'/>
+      <ControlledOpenSelectCategory category={category} setCategory={setCategory} options={CategoryOptions} title='category' />
+      <Input type='text' placeholder='Search...'
+          value={search} 
+          onChange={handleSearchChange}>
+          <input />
+      </Input>  
     </Grid>
     <br/>
     <br/>
@@ -47,6 +105,12 @@ const InputExampleActions = () => (
       </Header>
     </Divider>
   </>
-)
+  );
+}
 
-export default InputExampleActions
+const mapStateToProps = createStructuredSelector ({
+   collections : selectCollections
+})
+
+
+export default connect(mapStateToProps)(SearchBar)
