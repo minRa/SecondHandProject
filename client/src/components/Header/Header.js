@@ -7,9 +7,19 @@ import {connect} from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from'../../redux/user/user.selector';
 import { signOutStart } from '../../redux/user/user.actions';
+import { selectCartHidden } from '../../redux/cart/cart.selector'
 import CartIcon from './components/cart-icon/cart-icon';
+import CartDropdown from'./components/cart-dropdown/cart-dropdown';
+import {toggleCartHidden} from '../../redux/cart/cart.actions'
 
-const Header = ({ currentUser, signOutStart }) => {
+const Header = ({hidden, currentUser, signOutStart, toggleCartHidden }) => {
+
+ const handleHidden = () => {
+
+   if(!hidden) toggleCartHidden()
+    signOutStart()
+ }
+
     return (
   <Navbar collapseOnSelect bg="light"  variant="light">
   <Navbar.Brand href="/">NZ_SecondHandShop</Navbar.Brand>
@@ -38,7 +48,7 @@ const Header = ({ currentUser, signOutStart }) => {
             <Icon name='user circle'/> {currentUser.displayName}
           </OptionLink>
 
-        <OptionLink as='div' onClick={signOutStart}><Icon name='sign-out'/>
+        <OptionLink as='div' onClick={handleHidden}><Icon name='sign-out'/>
             Sign Out
           </OptionLink>   
         </Nav>
@@ -49,7 +59,7 @@ const Header = ({ currentUser, signOutStart }) => {
         <OptionLink  to='/signup'><Icon name='signup'/> Register</OptionLink>
       </Nav>
       )}
-
+        {hidden ? null :<CartDropdown/>}
     </Navbar.Collapse>
   </Navbar>
  ) 
@@ -57,11 +67,14 @@ const Header = ({ currentUser, signOutStart }) => {
 
 
 const mapStateToProps = createStructuredSelector ({
-  currentUser : selectCurrentUser
+  currentUser : selectCurrentUser,
+  hidden : selectCartHidden
 })
 
 const mapDispatchToProps = dispatch => ({
-  signOutStart: () => dispatch(signOutStart())
+  signOutStart: () => dispatch(signOutStart()),
+  toggleCartHidden:() => dispatch(toggleCartHidden())
+
 });
 
 export default connect(

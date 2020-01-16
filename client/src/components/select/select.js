@@ -49,12 +49,6 @@ export default function ControlledOpenSelectCategory({category, setCategory, opt
                 return <MenuItem key={item.id} value={item.value}>{ item.name}</MenuItem>
                 })
             }
-          {/* <MenuItem value="all">
-            <em>All - Items</em>
-          </MenuItem>
-          <MenuItem value='car'> -- Car -- </MenuItem>
-          <MenuItem value='clothes'>Clothes</MenuItem>
-          <MenuItem value='others'>Others</MenuItem> */}
         </Select>
       </FormControl>
     </div>

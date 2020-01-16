@@ -5,11 +5,15 @@ import Home  from'./page/Home/Home';
 import Header  from'./components/Header/Header';
 import SignUp from './page/SignInAndSignUp/signUp';
 import SignIn from './page/SignInAndSignUp/signIn';
+import CheckOut from'./page/CheckOut/CheckOut';
+import ItemDetail from'./page/ItemDetail/ItemDetail';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selector';
 import {checkUserSession} from './redux/user/user.actions';
+
+
 
 function App({currentUser, checkUserSession}) {
 
@@ -36,9 +40,8 @@ function App({currentUser, checkUserSession}) {
           : <SignUp/>
           } />
 
-
-          
-
+        <Route exact path='/checkout' component = {CheckOut} />   
+        <Route exact path='/itemDetail' component = {ItemDetail} />           
       </Switch>
     </div>
   );
