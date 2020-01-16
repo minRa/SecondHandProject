@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 export const CartItemContainer = styled.div`
   width: 100%;
@@ -18,4 +20,16 @@ export const ItemDetailsContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   padding: 10px 20px;
+`;
+
+export const RemoveCircleIconStyle = styled(RemoveCircleIcon)`
+align-items: center;
+justify-content: left;
+cursor: pointer;
+`;
+
+export const DeleteForeverIconStyle= styled(DeleteForeverIcon)`
+align-items: center;
+justify-content: right;
+cursor: pointer;
 `;
