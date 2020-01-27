@@ -3,7 +3,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = require('express')();
+const FBAuth = require('./util/fbAuth');
 const port = process.env.PORT || 5000;
+const { uploadImage } = require('./handlers/product.js')
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,10 +27,13 @@ const {payment}= require('./handlers/stripe');
 
 // route
 app.post('/payment', payment);
+app.post('/addItem', FBAuth, uploadImage);
+
 
 app.listen(port, error => {
   if (error) throw error;
   console.log('Server running on port ' + port);
 });
+
 
 //exports.shs = functions.region('us-central1').https.onRequest(app);

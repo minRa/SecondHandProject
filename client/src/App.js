@@ -7,6 +7,7 @@ import SignUp from './page/SignInAndSignUp/signUp';
 import SignIn from './page/SignInAndSignUp/signIn';
 import CheckOut from'./page/CheckOut/CheckOut';
 import ItemDetail from'./page/ItemDetail/ItemDetail';
+import AddItem from'./page/AddItem/AddItem';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -26,7 +27,7 @@ function App({currentUser, checkUserSession}) {
       <Header/>
       <Switch>
         <Route exact path='/' component = {Home} />
-
+        <Route exact path='/addItem' component = {AddItem} />
         <Route 
         exact path='/signin'
         render ={() =>

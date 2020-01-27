@@ -26,13 +26,13 @@ const Header = ({hidden, currentUser, signOutStart, toggleCartHidden }) => {
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">
-      <NavDropdown title="Community" id="collasible-nav-dropdown">
+      {/* <NavDropdown title="Community" id="collasible-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Blackboard</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.2">Post Item</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item href="#action/3.4">Live Chat</NavDropdown.Item>
-      </NavDropdown>
-      <Nav.Link href="#pricing">Contact</Nav.Link>
+      </NavDropdown> */}
+      <Nav.Link href="/addItem">Post Item</Nav.Link>
     </Nav>
     
       {currentUser ? (
